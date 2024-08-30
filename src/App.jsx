@@ -8,9 +8,7 @@ function App() {
   return (
     <>
       <div style={{ width: "100%", padding: "30px 0" }}>
-        <h2 style={{ textAlign: "center" }}>
-          This is for image processing project build by Wahab Frogh
-        </h2>
+        <h2 style={{ textAlign: "center" }}>Image Preprocessing</h2>
       </div>
       <div>
         <Home />

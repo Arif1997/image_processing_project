@@ -1,7 +1,7 @@
 #root {
   background: rgb(233, 233, 233);
   padding: 50px auto;
-  height: 100vh;
+  padding-bottom: 100px;
 }
 * {
   margin: 0;
