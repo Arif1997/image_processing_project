@@ -31,11 +31,18 @@
   height: auto;
 }
 .img__container {
-  width: 80vw;
+  width: 98vw;
   margin: auto;
 }
+
+.img__container span {
+  border: 2px solid darkgray;
+  margin: auto 5px;
+  background-color: rgb(235, 239, 242);
+  border-radius: 10px;
+}
 .img__container span img {
-  width: 85%;
-  max-height: 600px;
+  width: 90%;
+  max-height: 700px;
   margin: 20px;
 }
