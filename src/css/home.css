@@ -1,5 +1,6 @@
 .home {
-  background: rgb(233, 233, 233);
+  background: black;
+  margin-top: 20px;
   width: 100%;
   height: auto;
   min-height: 100vh;
@@ -15,34 +16,48 @@
 }
 
 #photo__selector {
-  background-color: rgb(200, 200, 200);
+  background-color: rgb(47, 47, 255);
   padding: 10px 0 10px 10px;
   margin: 10px;
-  color: black;
   border: none;
   border-radius: 5px;
 }
 
 .home div select {
+  background-color: rgb(47, 47, 255);
+  color: white;
   border-radius: 5px;
   border: none;
   padding: 10px;
   margin: 10px;
   height: auto;
 }
+
 .img__container {
-  width: 98vw;
+  width: 100%;
   margin: auto;
 }
 
 .img__container span {
   border: 2px solid darkgray;
   margin: auto 5px;
-  background-color: rgb(235, 239, 242);
+  background-color: rgb(37, 37, 37);
   border-radius: 10px;
 }
 .img__container span img {
   width: 90%;
-  max-height: 700px;
+  max-height: 500px;
   margin: 20px;
+}
+
+#result__container {
+  text-align: left;
+  width: 500px;
+  margin: auto;
+  border: 1px solid black;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  color: black;
+  background-color: white;
 }

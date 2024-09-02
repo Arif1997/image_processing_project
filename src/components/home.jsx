@@ -10,6 +10,28 @@ function Home() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
 
+  const onFileUploadWithFilterName = async () => {
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    try {
+      const response = await axios.post(
+        `${BASE_API_URL}/selected-filter`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setData(response.data);
+      setFolderData(null);
+    } catch (error) {
+      console.error("There was an error processing the image!", error);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       const response = await fetch(`${BASE_API_URL}folder`).then((res) =>
@@ -162,19 +184,8 @@ function Home() {
         )}
       </div>
 
-      <div
-        style={{
-          textAlign: "left",
-          width: "500px",
-          margin: "auto",
-          border: "1px solid black",
-          padding: "20px",
-          marginTop: "20px",
-          borderRadius: "10px",
-          backgroundColor: "lightgray",
-        }}
-      >
-        <h3>Result Summery</h3>
+      <div id="result__container">
+        <h2 style={{ margin: "10px auto" }}>Result Summery</h2>
         <div>
           <p>
             <strong>Best PSNR: </strong>{" "}
@@ -203,28 +214,29 @@ function Home() {
             %
           </p>
         </div>
+        {folderData && (
+          <div
+            style={{
+              justifyContent: "left",
+              textAlign: "left",
+              margin: "20px auto",
+              borderTop: "2px solid darkgray",
+              paddingTop: "20px",
+            }}
+          >
+            <h4>Selected folder: {folderData.folder_path}</h4>
+            <h4>Paths to best image: </h4>
+            <ul>
+              <li>
+                {folderData.result_folder}/{folderData.best_fl_psnr}
+              </li>
+              <li>
+                {folderData.result_folder}/{folderData.best_fl_ssim}
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
-      {folderData && (
-        <div
-          style={{
-            justifyContent: "left",
-            textAlign: "left",
-            margin: "auto",
-            width: "35vw",
-          }}
-        >
-          <h4>Selected folder: {folderData.folder_path}</h4>
-          <h4>Paths to best image: </h4>
-          <ul>
-            <li>
-              {folderData.result_folder}/{folderData.best_fl_psnr}
-            </li>
-            <li>
-              {folderData.result_folder}/{folderData.best_fl_ssim}
-            </li>
-          </ul>
-        </div>
-      )}
     </div>
   );
 }
