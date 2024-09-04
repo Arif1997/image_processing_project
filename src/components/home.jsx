@@ -239,6 +239,21 @@ function Home() {
           </div>
         )}
       </div>
+      <div
+        style={{
+          background: "white",
+          width: "40vw",
+          minHeight: "300px",
+          color: "black",
+          margin: " 20px auto",
+          borderRadius: "10px",
+          textAlign: "left",
+          padding: "20px",
+        }}
+      >
+        <h1>{data.filter_info.name}: </h1>
+        <p>{data.filter_info.description}</p>
+      </div>
     </div>
   );
 }
