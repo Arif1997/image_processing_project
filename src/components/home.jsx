@@ -9,24 +9,26 @@ function Home() {
   const [folderData, setFolderData] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
+  const [filter, setFilter] = useState("");
+
+  const handleFilterChange = (event) => {
+    const selected_filter = event.target.value;
+    setFilter(selected_filter);
+  };
 
   const onFileUploadWithFilterName = async () => {
     const formData = new FormData();
     formData.append("image", selectedFile);
+    formData.append("filter", filter);
 
     try {
-      const response = await axios.post(
-        `${BASE_API_URL}/selected-filter`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
+      const response = await axios.post(`${BASE_API_URL}filter`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setData(response.data);
-      setFolderData(null);
+      console.log(response.data);
     } catch (error) {
       console.error("There was an error processing the image!", error);
     }
@@ -101,29 +103,29 @@ function Home() {
   return (
     <div className="home">
       <div>
-        <select>
-          <option>Select Filter</option>
-          <option>Denoised</option>
-          <option>Mean</option>
-          <option>Median</option>
-          <option>Edge Detection</option>
-          <option>Laplacian</option>
-          <option>Morphological Filter</option>
-          <option>Sobel Filter</option>
-          <option>Brightness</option>
-          <option>Contrast</option>
-          <option>Color</option>
-          <option>Gaussian Blur</option>
-          <option>Inverted</option>
-          <option>Sharpening</option>
-          <option>Resized</option>
-          <option>Scaled</option>
-          <option>Detail</option>
-          <option>Edge Enhance</option>
-          <option>Equalized</option>
+        <select value={filter} onChange={handleFilterChange}>
+          <option value={""}>Select Filter</option>
+          <option value={"Denoised"}>Denoised</option>
+          <option value={"Mean"}>Mean</option>
+          <option value={"Median"}>Median</option>
+          <option value={"Edge Detection"}>Edge Detection</option>
+          <option value={"Laplacian"}>Laplacian</option>
+          <option value={"Morphological Filter"}>Morphological Filter</option>
+          <option value={"Sobel Filter"}>Sobel Filter</option>
+          <option value={"Brightness"}>Brightness</option>
+          <option value={"Contrast"}>Contrast</option>
+          <option value={"Color"}>Color</option>
+          <option value={"Gaussian Blur"}>Gaussian Blur</option>
+          <option value={"Inverted"}>Inverted</option>
+          <option value={"Sharpening"}>Sharpening</option>
+          <option value={"Resized"}>Resized</option>
+          <option value={"Scaled"}>Scaled</option>
+          <option value={"Detail"}>Detail</option>
+          <option value={"Edge Enhance"}>Edge Enhance</option>
+          <option value={"Equalized"}>Equalized</option>
         </select>
         <input type="file" onChange={onFileChange} id="photo__selector" />
-        <button>Apply Technique</button>
+        <button onClick={onFileUploadWithFilterName}>Apply Technique</button>
         <button onClick={handleSubmit}>Apply on local directory</button>
       </div>
       <div
