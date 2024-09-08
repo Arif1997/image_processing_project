@@ -10,6 +10,7 @@ function Home() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
   const [filter, setFilter] = useState("");
+  const [best, setBest] = useState("");
 
   const handleFilterChange = (event) => {
     const selected_filter = event.target.value;
@@ -28,7 +29,7 @@ function Home() {
         },
       });
       setData(response.data);
-      console.log(response.data);
+      setBest("");
     } catch (error) {
       console.error("There was an error processing the image!", error);
     }
@@ -71,6 +72,7 @@ function Home() {
 
       setData(response.data);
       setFolderData(null);
+      setBest("Best");
     } catch (error) {
       console.error("There was an error processing the image!", error);
     }
@@ -100,14 +102,19 @@ function Home() {
       });
   };
 
+  const buttonReaction = () => {
+    const button = document.getElementsByTagName("button");
+    button.style.background("pink");
+  };
+
   return (
     <div className="home">
       <div>
         <select value={filter} onChange={handleFilterChange}>
           <option value={""}>Select Filter</option>
           <option value={"Denoised"}>Denoised</option>
-          <option value={"Mean"}>Mean</option>
-          <option value={"Median"}>Median</option>
+          <option value={"Mean Filtered"}>Mean Filtered</option>
+          <option value={"Median Filtered"}>Median Filtered</option>
           <option value={"Edge Detection"}>Edge Detection</option>
           <option value={"Laplacian"}>Laplacian</option>
           <option value={"Morphological Filter"}>Morphological Filter</option>
@@ -125,8 +132,8 @@ function Home() {
           <option value={"Equalized"}>Equalized</option>
         </select>
         <input type="file" onChange={onFileChange} id="photo__selector" />
-        <button onClick={onFileUploadWithFilterName}>Apply Technique</button>
-        <button onClick={handleSubmit}>Apply on local directory</button>
+        <button onClick={onFileUploadWithFilterName}>Apply {filter}</button>
+        <button onClick={handleSubmit}>Apply on a folder</button>
       </div>
       <div
         style={{ display: "flex", justifyContent: "center" }}
@@ -136,7 +143,7 @@ function Home() {
           <span>
             <img src={originalImage} alt="Original Image" />
             <h3>Original</h3>
-            <button onClick={onFileUpload}>Upload Image</button>
+            <button onClick={onFileUpload}>Find best filter</button>
           </span>
         )}
         {data ? (
@@ -186,73 +193,66 @@ function Home() {
         )}
       </div>
 
-      <div id="result__container">
-        <h2 style={{ margin: "10px auto" }}>Result Summery</h2>
-        <div>
-          <p>
-            <strong>Best PSNR: </strong>{" "}
-            {data
-              ? data.best_filter_psnr
-              : folderData && folderData.best_fl_psnr}
-          </p>
-          <p>
-            <strong>Best SSIM: </strong>{" "}
-            {data
-              ? data.best_filter_ssim
-              : folderData && folderData.best_fl_ssim}
-          </p>
-          <p>
-            <strong>Accuracy PSNR: </strong>{" "}
-            {data
-              ? data.best_psnr_accuracy.toFixed(2)
-              : folderData && folderData.best_psnr_accuracy.toFixed(2)}{" "}
-            %
-          </p>
-          <p>
-            <strong>Accuracy SSIM: </strong>{" "}
-            {data
-              ? data.best_ssim_accuracy.toFixed(2)
-              : folderData && folderData.best_ssim_accuracy.toFixed(2)}{" "}
-            %
-          </p>
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <div id="result__container">
+          <h2 style={{ margin: "10px auto" }}>Result Summery</h2>
+          <div>
+            <p>
+              <strong>{best && best} PSNR: </strong>{" "}
+              {data
+                ? data.best_filter_psnr
+                : folderData && folderData.best_fl_psnr}
+            </p>
+            <p>
+              <strong>{best && best} SSIM: </strong>{" "}
+              {data
+                ? data.best_filter_ssim
+                : folderData && folderData.best_fl_ssim}
+            </p>
+            <p>
+              <strong>Accuracy PSNR: </strong>{" "}
+              {data
+                ? data.best_psnr_accuracy.toFixed(2)
+                : folderData && folderData.best_psnr_accuracy.toFixed(2)}{" "}
+              %
+            </p>
+            <p>
+              <strong>Accuracy SSIM: </strong>{" "}
+              {data
+                ? data.best_ssim_accuracy.toFixed(2)
+                : folderData && folderData.best_ssim_accuracy.toFixed(2)}{" "}
+              %
+            </p>
+          </div>
+          {folderData && (
+            <div
+              style={{
+                justifyContent: "left",
+                textAlign: "left",
+                margin: "20px auto",
+                borderTop: "2px solid darkgray",
+                paddingTop: "20px",
+              }}
+            >
+              <h4>Selected folder: {folderData.folder_path}</h4>
+              <h4>Paths to best image: </h4>
+              <ul>
+                <li>
+                  {folderData.result_folder}/{folderData.best_fl_psnr}
+                </li>
+                <li>
+                  {folderData.result_folder}/{folderData.best_fl_ssim}
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
-        {folderData && (
-          <div
-            style={{
-              justifyContent: "left",
-              textAlign: "left",
-              margin: "20px auto",
-              borderTop: "2px solid darkgray",
-              paddingTop: "20px",
-            }}
-          >
-            <h4>Selected folder: {folderData.folder_path}</h4>
-            <h4>Paths to best image: </h4>
-            <ul>
-              <li>
-                {folderData.result_folder}/{folderData.best_fl_psnr}
-              </li>
-              <li>
-                {folderData.result_folder}/{folderData.best_fl_ssim}
-              </li>
-            </ul>
+        {data && (
+          <div id="filter__description">
+            <h2 style={{ margin: "10px auto" }}>{data.filter_info.name}: </h2>
+            <p>{data.filter_info.description}</p>
           </div>
         )}
-      </div>
-      <div
-        style={{
-          background: "white",
-          width: "40vw",
-          minHeight: "300px",
-          color: "black",
-          margin: " 20px auto",
-          borderRadius: "10px",
-          textAlign: "left",
-          padding: "20px",
-        }}
-      >
-        <h1>{data.filter_info.name}: </h1>
-        <p>{data.filter_info.description}</p>
       </div>
     </div>
   );

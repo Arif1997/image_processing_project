@@ -15,6 +15,10 @@
   border-radius: 5px;
 }
 
+.home div button:hover {
+  background-color: rgb(255, 80, 109);
+}
+
 #photo__selector {
   background-color: rgb(47, 47, 255);
   padding: 10px 0 10px 10px;
@@ -50,11 +54,16 @@
   margin: 20px;
 }
 
-#result__container {
-  text-align: left;
-  width: 500px;
+.img__container span img:hover {
+  width: 100%;
+  max-height: max-content;
   margin: auto;
-  border: 1px solid black;
+}
+
+#result__container,
+#filter__description {
+  text-align: left;
+  width: 600px;
   padding: 20px;
   margin-top: 20px;
   border-radius: 10px;
