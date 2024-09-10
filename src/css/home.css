@@ -1,0 +1,72 @@
+.home {
+  background: black;
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  text-align: center;
+}
+.home div button {
+  background-color: rgb(47, 47, 255);
+  padding: 10px;
+  margin: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.home div button:hover {
+  background-color: rgb(255, 80, 109);
+}
+
+#photo__selector {
+  background-color: rgb(47, 47, 255);
+  padding: 10px 0 10px 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.home div select {
+  background-color: rgb(47, 47, 255);
+  color: white;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  height: auto;
+}
+
+.img__container {
+  width: 100%;
+  margin: auto;
+}
+
+.img__container span {
+  border: 2px solid darkgray;
+  margin: auto 5px;
+  background-color: rgb(37, 37, 37);
+  border-radius: 10px;
+}
+.img__container span img {
+  width: 90%;
+  max-height: 500px;
+  margin: 20px;
+}
+
+.img__container span img:hover {
+  width: 100%;
+  max-height: max-content;
+  margin: auto;
+}
+
+#result__container,
+#filter__description {
+  text-align: left;
+  width: 500px;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  color: black;
+  background-color: white;
+}
